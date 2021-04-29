@@ -13,12 +13,12 @@ defmodule ExCrud.MixProject do
       package: package(),
       deps: deps(),
       # Documentation
-      name: "ExTenant",
+      name: "ExCrud",
       source_url: project_url(),
       homepage_url: project_url(),
       docs: [
         # The main page in the docs
-        main: "ExTenant",
+        main: "ExCrud",
         extras: ["README.md"]
       ]
     ]
