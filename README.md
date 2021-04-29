@@ -1,6 +1,6 @@
 # ExCrud
 
-## A module that injects crud based functions into a context module for use in Ecto based applications
+- A module that injects crud based functions into a context module for use in Ecto based applications
 
 ## Installation
 
@@ -16,7 +16,7 @@ end
 ```
 
 
-## Call the `use ExCrud` macro to inject crud functions into the context module
+## Crud function injection
 
 - In each Context Module - you want to use the crud functions
   -----------------------------------------------------------
@@ -31,7 +31,7 @@ end
 
     - `add/1`
 
-      ## Examples:
+      ### Examples for `add/1`
       - `iex> MyApp.Post.add(%{key1: value1, key2: value2})`
         `{:ok, struct}`
       - `iex> MyApp.Post.add(key1: value1, key2: value)`
@@ -39,7 +39,7 @@ end
 
     - `get/1`
 
-      ## Examples:
+      ### Examples for `get/1`
         - `iex> MyApp.Post.get(1)`
           `{:ok, struct}`
 
@@ -51,19 +51,19 @@ end
 
     - `get_all/0`
 
-      ## Examples
+      ### Examples for `get_all/0`
         - `iex> MyApp.Post.get_all()`
         `{:ok, list of structures}`
 
     - `get_few/1`
 
-      ## Examples
+      ### Examples for `get_few/1`
         - `iex> MyApp.Post.get_few(200)`
           `{:ok, list of structures}`
 
     - `update/2`
 
-      ## Examples
+      ### Examples for `update/1`
         - `iex> MyApp.Post.update(struct, key: value)`
           `{:ok, list of structures}`
 
@@ -78,7 +78,7 @@ end
 
     - `delete/1`
 
-      ## Examples
+      ### Examples for `delete/1`
         - `iex> MyApp.Post.delete(1)`
           `{:ok, structure}`
 
