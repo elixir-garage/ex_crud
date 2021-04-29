@@ -14,8 +14,8 @@ defmodule ExCrud do
       @cont Keyword.get(opts, :context)
       @schema Keyword.get(opts, :schema_module)
 
-      raise_context_not_set_error(@cont)
-      raise_schema_not_set_error(@schema)
+      ExCrud.Utils.raise_context_not_set_error(@cont)
+      ExCrud.Utils.raise_schema_not_set_error(@schema)
 
       @doc """
       Returns the current Repo
@@ -400,12 +400,6 @@ defmodule ExCrud do
       defp response(item, _module), do: {:ok, item}
 
       defp error_str(key, msg), do: "#{Atom.to_string(key) |> String.capitalize()}: #{msg}"
-
-      defp raise_context_not_set_error(nil), do: raise(ExCrud.ContextNotSetError)
-      defp raise_context_not_set_error(_), do: :ok
-
-      defp raise_schema_not_set_error(nil), do: raise(ExCrud.SchemaNotSetError)
-      defp raise_schema_not_set_error(_), do: :ok
     end
   end
 end
