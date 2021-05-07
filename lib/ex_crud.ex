@@ -435,7 +435,7 @@ defmodule ExCrud do
         do: from(item in @schema, select: item) |> find(opts_to_map(opts), Enum.count(opts), 0)
 
       defp set_field(mod, opts) do
-        ExCrud.Utils.check_changeset_function(mod.__struct__)
+        ExCrud.Utils.check_changeset_function(mod)
 
         mod.changeset(mod.__struct__, opts_to_map(opts))
       end
