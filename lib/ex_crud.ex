@@ -98,13 +98,6 @@ defmodule ExCrud do
       @schema
       |> check_changeset_function()
 
-      defp check_changeset_function(schema) do
-        schema
-        |> Code.ensure_loaded()
-        |> function_exported?(:changeset, 1)
-        |> ExCrud.Utils.raise_missing_changeset_function_error()
-      end
-
       @doc """
       Returns the current Repo
       """
@@ -487,6 +480,19 @@ defmodule ExCrud do
       defp response(item, _module), do: {:ok, item}
 
       defp error_str(key, msg), do: "#{Atom.to_string(key) |> String.capitalize()}: #{msg}"
+    end
+  end
+
+  def check_changeset_function(schema) do
+    case Code.ensure_loaded(schema) do
+      {:module, module} ->
+        module
+        |> function_exported?(:changeset, 1)
+        |> ExCrud.Utils.raise_missing_changeset_function_error()
+
+      {:error, _load_error} ->
+        nil
+        |> ExCrud.Utils.raise_schema_not_set_error()
     end
   end
 end
