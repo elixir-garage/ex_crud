@@ -96,8 +96,14 @@ defmodule ExCrud do
       ExCrud.Utils.raise_schema_not_set_error(@schema)
 
       @schema
-      |> function_exported?(:changeset, 1)
-      |> ExCrud.Utils.raise_missing_changeset_function_error()
+      |> check_changeset_function()
+
+      defp check_changeset_function(schema) do
+        schema
+        |> Code.ensure_loaded()
+        |> function_exported?(:changeset, 1)
+        |> ExCrud.Utils.raise_missing_changeset_function_error()
+      end
 
       @doc """
       Returns the current Repo
