@@ -95,9 +95,6 @@ defmodule ExCrud do
       ExCrud.Utils.raise_context_not_set_error(@cont)
       ExCrud.Utils.raise_schema_not_set_error(@schema)
 
-      @schema
-      |> ExCrud.Utils.check_changeset_function()
-
       @doc """
       Returns the current Repo
       """
@@ -324,8 +321,13 @@ defmodule ExCrud do
 
           `{:ok, list of structures}`
       """
-      def update(%@schema{} = item, opts) when is_struct(item),
-        do: item.__struct__.changeset(item, opts_to_map(opts)) |> @cont.update()
+
+      def update(%@schema{} = item, opts) when is_struct(item) do
+        ExCrud.Utils.check_changeset_function(item.__struct__)
+
+        item.__struct__.changeset(item, opts_to_map(opts))
+        |> @cont.update()
+      end
 
       @doc """
       Makes changes to the structure from the database
@@ -432,7 +434,11 @@ defmodule ExCrud do
       def find(opts),
         do: from(item in @schema, select: item) |> find(opts_to_map(opts), Enum.count(opts), 0)
 
-      defp set_field(mod, opts), do: mod.changeset(mod.__struct__, opts_to_map(opts))
+      defp set_field(mod, opts) do
+        ExCrud.Utils.check_changeset_function(mod.__struct__)
+
+        mod.changeset(mod.__struct__, opts_to_map(opts))
+      end
 
       defp opts_to_map(opts) when is_map(opts), do: opts
 

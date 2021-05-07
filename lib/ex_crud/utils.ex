@@ -13,6 +13,12 @@ defmodule ExCrud.Utils do
     do: raise(ExCrud.MissingChangesetFunctionError)
 
   def check_changeset_function(schema) do
+    schema
+    |> function_exported?(:changeset, 1)
+    |> ExCrud.Utils.raise_missing_changeset_function_error()
+  end
+
+  def check_changeset_loaded_function(schema) do
     case Code.ensure_loaded(schema) do
       {:module, module} ->
         module
