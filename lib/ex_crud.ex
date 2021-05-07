@@ -95,6 +95,10 @@ defmodule ExCrud do
       ExCrud.Utils.raise_context_not_set_error(@cont)
       ExCrud.Utils.raise_schema_not_set_error(@schema)
 
+      @schema
+      |> function_exported?(:changeset, 1)
+      |> ExCrud.Utils.raise_missing_changeset_function_error()
+
       @doc """
       Returns the current Repo
       """
